@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Satoshi', ...defaultTheme.fontFamily.sans],
+        'poppins': ['Poppins'],
       },
       spacing: {
         18: '4.5rem',

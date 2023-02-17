@@ -49,7 +49,7 @@ function EpisodeEntry({ episode }) {
         <div className="flex flex-col items-start">
           <h2
             id={`episode-${episode.id}-title`}
-            className="mt-2 text-lg font-bold text-slate-900"
+            className="mt-2 text-2xl font-bold text-brand-blue hover:text-brand-blue-900"
           >
             <Link href={`/${episode.id}`}>{episode.title}</Link>
           </h2>
@@ -110,7 +110,7 @@ export default function Home({ episodes }) {
       </Head>
       <div className="pt-16 pb-12 sm:pb-4 lg:pt-12">
         <Container>
-          <h1 className="text-2xl font-bold leading-7 text-slate-900">
+          <h1 className="text-4xl font-bold leading-7 text-brand-blue">
             Episodes
           </h1>
         </Container>

@@ -8,6 +8,20 @@ import { FormattedDate } from '@/components/FormattedDate'
 import { PlayButton } from '@/components/player/PlayButton'
 import ReactHtmlParser from "react-html-parser";
 
+function Description({ episode }) {
+  return (
+    <div className="flex flex-col gap-5 sm:flex-row">
+      <div className="max-w-xl flex-auto">
+        <div
+          className="prose text-base leading-7 text-gray-600"
+          dangerouslySetInnerHTML={{__html: episode.description}}
+        />
+      </div>
+      <img className="h-auto m-auto hidden md:block sm:max-w-[15rem] md:max-w-[13rem] w-auto flex-none rounded-2xl object-contain mt-0" src={episode.itunes_image.href} alt=""/>
+    </div>
+  )
+}
+
 export default function Episode({ episode }) {
   const regex = /(<([^>]+)>)/ig;
   const clean_description = episode.description.replace(regex, '');
@@ -32,14 +46,19 @@ export default function Episode({ episode }) {
       <Head>
         <title>{`${episode.title} - Nawerk Podcast`}</title>
         <meta name="description" content={clean_description} />
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"></link>
       </Head>
       <article className="py-16 lg:py-36">
         <Container>
           <header className="flex flex-col">
             <div className="flex items-center gap-6">
               <PlayButton player={player} size="large" />
-              <div className="flex flex-col">
-                <h1 className="mt-2 text-4xl font-bold text-slate-900">
+              <div className="flex flex-wrap">
+                <h1 className="mt-2 text-2xl md:text-4xl font-bold text-black">
                   {episode.title}
                 </h1>
                 <FormattedDate
@@ -50,10 +69,7 @@ export default function Episode({ episode }) {
             </div>
           </header>
           <hr className="my-12 border-gray-200" />
-          <div
-            className="prose prose-slate mt-14 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['\2013\20'] [&>ul]:pl-5 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2:nth-of-type(3n)]:before:bg-violet-200"
-            dangerouslySetInnerHTML={{ __html: episode.description }}
-          />
+          <Description episode={episode}/>
         </Container>
       </article>
     </>
@@ -63,10 +79,11 @@ export default function Episode({ episode }) {
 export async function getStaticProps({ params }) {
   let feed = await parse('https://anchor.fm/s/c3398550/podcast/rss')
   let episode = feed.items
-    .map(({ id, title, description, enclosures, published }) => ({
+    .map(({ id, title, description, itunes_image, enclosures, published }) => ({
       id: id.toString(),
       title: `${title}`,
       description,
+      itunes_image,
       published,
       audio: enclosures.map((enclosure) => ({
         src: enclosure.url,

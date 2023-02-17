@@ -99,8 +99,8 @@ export function Layout({ children }) {
             <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 sm:rounded-xl lg:rounded-2xl" />
           </Link>
           <div className="mt-10 text-center lg:mt-12 lg:text-left">
-            <p className="text-xl font-bold text-slate-900">
-              <Link href="/">Nawerk Podcast</Link>
+            <p className="text-xl font-bold">
+              <Link className="text-brand-blue hover:text-brand-blue-900" href="/">Nawerk Podcast</Link>
             </p>
             <p className="mt-3 text-lg font-medium leading-8 text-slate-700">
               Nawerk, de podcast voor na werk. Verschillende gastprekers vertellen over hun passie in hun werk, wat ze doen en hoe ze daar een verschil maken.
