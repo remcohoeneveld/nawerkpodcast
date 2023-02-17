@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { parse } from 'rss-to-json'
+import ReactHtmlParser from 'react-html-parser';
 
 import { useAudioPlayer } from '@/components/AudioProvider'
 import { Container } from '@/components/Container'
@@ -57,7 +58,7 @@ function EpisodeEntry({ episode }) {
             className="order-first font-mono text-sm leading-7 text-slate-500"
           />
           <p className="mt-1 text-base leading-7 text-slate-700">
-            {episode.description}
+            { ReactHtmlParser (episode.description) }
           </p>
           <div className="mt-4 flex items-center gap-4">
             <button
@@ -125,7 +126,7 @@ export default function Home({ episodes }) {
 }
 
 export async function getStaticProps() {
-  let feed = await parse('https://their-side-feed.vercel.app/api/feed')
+  let feed = await parse('https://anchor.fm/s/c3398550/podcast/rss')
 
   if (feed === null) {
     return {props: {episodes: [], revalidate: 10}}
@@ -136,7 +137,7 @@ export async function getStaticProps() {
       episodes: feed.items.map(
         ({ id, title, description, enclosures, published }) => ({
           id,
-          title: `${id}: ${title}`,
+          title: `${title}`,
           published,
           description,
           audio: enclosures.map((enclosure) => ({

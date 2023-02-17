@@ -6,6 +6,7 @@ import { useAudioPlayer } from '@/components/AudioProvider'
 import { Container } from '@/components/Container'
 import { FormattedDate } from '@/components/FormattedDate'
 import { PlayButton } from '@/components/player/PlayButton'
+import ReactHtmlParser from "react-html-parser";
 
 export default function Episode({ episode }) {
   let date = new Date(episode.published)
@@ -27,7 +28,7 @@ export default function Episode({ episode }) {
     <>
       <Head>
         <title>{`${episode.title} - Nawerk Podcast`}</title>
-        <meta name="description" content={episode.description} />
+        <meta name="description" content={ ReactHtmlParser (episode.description) } />
       </Head>
       <article className="py-16 lg:py-36">
         <Container>
@@ -44,14 +45,11 @@ export default function Episode({ episode }) {
                 />
               </div>
             </div>
-            <p className="ml-24 mt-3 text-lg font-medium leading-8 text-slate-700">
-              {episode.description}
-            </p>
           </header>
           <hr className="my-12 border-gray-200" />
           <div
             className="prose prose-slate mt-14 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['\2013\20'] [&>ul]:pl-5 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2:nth-of-type(3n)]:before:bg-violet-200"
-            dangerouslySetInnerHTML={{ __html: episode.content }}
+            dangerouslySetInnerHTML={{ __html: episode.description }}
           />
         </Container>
       </article>
@@ -60,13 +58,12 @@ export default function Episode({ episode }) {
 }
 
 export async function getStaticProps({ params }) {
-  let feed = await parse('https://their-side-feed.vercel.app/api/feed')
+  let feed = await parse('https://anchor.fm/s/c3398550/podcast/rss')
   let episode = feed.items
-    .map(({ id, title, description, content, enclosures, published }) => ({
+    .map(({ id, title, description, enclosures, published }) => ({
       id: id.toString(),
-      title: `${id}: ${title}`,
+      title: `${title}`,
       description,
-      content,
       published,
       audio: enclosures.map((enclosure) => ({
         src: enclosure.url,
@@ -90,7 +87,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  let feed = await parse('https://their-side-feed.vercel.app/api/feed')
+  let feed = await parse('https://anchor.fm/s/c3398550/podcast/rss')
 
   return {
     paths: feed.items.map(({ id }) => ({
