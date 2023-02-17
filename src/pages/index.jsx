@@ -7,6 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { useAudioPlayer } from '@/components/AudioProvider'
 import { Container } from '@/components/Container'
 import { FormattedDate } from '@/components/FormattedDate'
+import {PlayButton} from "@/components/player/PlayButton";
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -47,12 +48,17 @@ function EpisodeEntry({ episode }) {
     >
       <Container>
         <div className="flex flex-col items-start">
-          <h2
-            id={`episode-${episode.id}-title`}
-            className="mt-2 text-2xl font-bold text-brand-blue hover:text-brand-blue-900"
-          >
-            <Link href={`/${episode.id}`}>{episode.title}</Link>
-          </h2>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-6 mt-4">
+              <PlayButton player={player} size="large"/>
+              <h2
+                id={`episode-${episode.id}-title`}
+                className="mt-2 text-2xl font-bold text-brand-blue hover:text-brand-blue-900"
+              >
+                <Link href={`/${episode.id}`}>{episode.title}</Link>
+              </h2>
+            </div>
+          </div>
           <FormattedDate
             date={date}
             className="order-first font-mono text-sm leading-7 text-slate-500"
@@ -60,28 +66,6 @@ function EpisodeEntry({ episode }) {
           <p className="mt-1 text-base leading-7 text-slate-700">
           </p>
           <div className="mt-4 flex items-center gap-4">
-            <button
-              type="button"
-              onClick={() => player.toggle()}
-              className="flex items-center text-sm font-bold leading-6 text-brand-blue hover:text-brand-blue-900 active:text-brand-blue-900"
-              aria-label={`${player.playing ? 'Pause' : 'Play'} episode ${
-                episode.title
-              }`}
-            >
-              <PlayPauseIcon
-                playing={player.playing}
-                className="h-2.5 w-2.5 fill-current"
-              />
-              <span className="ml-3" aria-hidden="true">
-                Listen
-              </span>
-            </button>
-            <span
-              aria-hidden="true"
-              className="text-sm font-bold text-slate-400"
-            >
-              /
-            </span>
             <Link
               href={`/${episode.id}`}
               className="flex items-center text-sm font-bold leading-6 text-brand-blue hover:text-brand-blue-900 active:text-brand-blue-900"
