@@ -9,6 +9,9 @@ import { PlayButton } from '@/components/player/PlayButton'
 import ReactHtmlParser from "react-html-parser";
 
 export default function Episode({ episode }) {
+  const regex = /(<([^>]+)>)/ig;
+  const clean_description = episode.description.replace(regex, '');
+
   let date = new Date(episode.published)
 
   let audioPlayerData = useMemo(
@@ -28,7 +31,7 @@ export default function Episode({ episode }) {
     <>
       <Head>
         <title>{`${episode.title} - Nawerk Podcast`}</title>
-        <meta name="description" content={ ReactHtmlParser (episode.description) } />
+        <meta name="description" content={clean_description} />
       </Head>
       <article className="py-16 lg:py-36">
         <Container>
