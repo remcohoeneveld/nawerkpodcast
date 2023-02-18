@@ -51,29 +51,29 @@ function EpisodeEntry({ episode }) {
           <div className="flex flex-col">
             <div className="flex items-center gap-6 mt-4">
               <PlayButton player={player} size="large"/>
+              <div className="flex flex-col">
               <h2
                 id={`episode-${episode.id}-title`}
                 className="mt-2 text-2xl font-bold text-brand-blue hover:text-brand-blue-900"
               >
                 <Link href={`/${episode.id}`}>{episode.title}</Link>
               </h2>
+                <div className="mt-4 flex items-center gap-4">
+                  <Link
+                    href={`/${episode.id}`}
+                    className="flex items-center text-sm font-bold leading-6 text-brand-blue-700 hover:text-brand-blue-900 active:text-brand-blue-900"
+                    aria-label={`Show notes for episode ${episode.title}`}
+                  >
+                    Show notes
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
           <FormattedDate
             date={date}
-            className="order-first font-mono text-sm leading-7 text-slate-500"
+            className="order-first font-mono text-sm leading-7 text-brand-gray"
           />
-          <p className="mt-1 text-base leading-7 text-slate-700">
-          </p>
-          <div className="mt-4 flex items-center gap-4">
-            <Link
-              href={`/${episode.id}`}
-              className="flex items-center text-sm font-bold leading-6 text-brand-blue hover:text-brand-blue-900 active:text-brand-blue-900"
-              aria-label={`Show notes for episode ${episode.title}`}
-            >
-              Show notes
-            </Link>
-          </div>
         </div>
       </Container>
     </article>
@@ -94,7 +94,7 @@ export default function Home({ episodes }) {
       </Head>
       <div className="pt-16 pb-12 sm:pb-4 lg:pt-12">
         <Container>
-          <h1 className="text-4xl font-bold leading-7 text-brand-blue">
+          <h1 className="text-4xl font-bold leading-7 text-black">
             Episodes
           </h1>
         </Container>

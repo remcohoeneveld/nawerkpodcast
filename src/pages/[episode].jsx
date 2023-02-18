@@ -8,13 +8,28 @@ import { FormattedDate } from '@/components/FormattedDate'
 import { PlayButton } from '@/components/player/PlayButton'
 import ReactHtmlParser from "react-html-parser";
 
+function urlify(text) {
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  return text.replace(urlRegex, function(url) {
+    var hyperlink = url;
+    if(!hyperlink.match('^https?:\/\/')){
+      hyperlink = 'http://' + hyperlink;
+    }
+    var cleanHyperLink = hyperlink.replace(/<\/?[^>]+(>|$)/g, "");
+    return '<a className="customLink" href="' + cleanHyperLink + '" rel="noopener" noreferrer>' + url + '</a>'
+
+  })
+
+}
+
 function Description({ episode }) {
   return (
     <div className="flex flex-col gap-5 sm:flex-row">
       <div className="max-w-xl flex-auto">
         <div
-          className="prose text-base leading-7 text-gray-600"
-          dangerouslySetInnerHTML={{__html: episode.description}}
+          className="prose text-base leading-7 text-black"
+          dangerouslySetInnerHTML={{__html: urlify(episode.description)}}
         />
       </div>
       <img className="h-auto m-auto hidden md:block sm:max-w-[15rem] md:max-w-[13rem] w-auto flex-none rounded-2xl object-contain mt-0" src={episode.itunes_image.href} alt=""/>
@@ -63,7 +78,7 @@ export default function Episode({ episode }) {
                 </h1>
                 <FormattedDate
                   date={date}
-                  className="order-first font-mono text-sm leading-7 text-slate-500"
+                  className="order-first font-mono text-sm leading-7 text-brand-gray"
                 />
               </div>
             </div>

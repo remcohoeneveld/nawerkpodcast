@@ -102,7 +102,7 @@ export function Layout({ children }) {
             <p className="text-xl font-bold">
               <Link className="text-brand-blue hover:text-brand-blue-900" href="/">Nawerk Podcast</Link>
             </p>
-            <p className="mt-3 text-lg font-medium leading-8 text-slate-700">
+            <p className="mt-3 text-lg font-medium leading-8 text-black">
               Nawerk, de podcast voor na werk. Verschillende gastprekers vertellen over hun passie in hun werk, wat ze doen en hoe ze daar een verschil maken.
             </p>
           </div>

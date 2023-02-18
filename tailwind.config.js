@@ -27,6 +27,9 @@ module.exports = {
           '800': '#257DCE',
           '900': '#257DCE'
         },
+        'brand-gray': {
+          DEFAULT: '#B0B0B0'
+        }
       }
     },
   },
