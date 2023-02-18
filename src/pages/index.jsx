@@ -51,13 +51,18 @@ function EpisodeEntry({ episode }) {
           <div className="flex flex-col">
             <div className="flex items-center gap-6 mt-4">
               <PlayButton player={player} size="large"/>
+              <Link href={`/${episode.id}`}><img className="h-auto m-auto hidden md:block sm:max-w-[15rem] md:max-w-[13rem] w-auto flex-none rounded-2xl object-contain mt-0" src={episode.itunes_image.href} alt=""/></Link>
               <div className="flex flex-col">
               <h2
                 id={`episode-${episode.id}-title`}
-                className="mt-2 text-2xl font-bold text-brand-blue hover:text-brand-blue-900"
+                className="mt-2 text-xl font-bold text-black hover:text-brand-blue-900"
               >
                 <Link href={`/${episode.id}`}>{episode.title}</Link>
               </h2>
+                <FormattedDate
+                  date={date}
+                  className="order-first font-mono text-sm leading-7 text-brand-gray"
+                />
                 <div className="mt-4 flex items-center gap-4">
                   <Link
                     href={`/${episode.id}`}
@@ -70,10 +75,6 @@ function EpisodeEntry({ episode }) {
               </div>
             </div>
           </div>
-          <FormattedDate
-            date={date}
-            className="order-first font-mono text-sm leading-7 text-brand-gray"
-          />
         </div>
       </Container>
     </article>
@@ -118,10 +119,11 @@ export async function getStaticProps() {
   return {
     props: {
       episodes: feed.items.map(
-        ({ id, title, description, enclosures, published }) => ({
+        ({ id, title, description, itunes_image, enclosures, published }) => ({
           id,
           title: `${title}`,
           published,
+          itunes_image,
           description,
           audio: enclosures.map((enclosure) => ({
             src: enclosure.url,

@@ -5,6 +5,7 @@ import clsx from 'clsx'
 
 import { AudioPlayer } from '@/components/player/AudioPlayer'
 import posterImage from '@/images/poster.png'
+import {Slider} from "@/components/Slider";
 
 function randomBetween(min, max, seed = 1) {
   return () => {
@@ -133,11 +134,12 @@ export function Layout({ children }) {
           </section>
         </div>
       </header>
+      <Slider />
       <main className="border-t border-slate-200 lg:relative lg:mb-28 lg:ml-112 lg:border-t-0 xl:ml-120">
         <div className="relative">{children}</div>
       </main>
-      <footer className="border-t border-slate-200 bg-brand-blue py-10 pb-40 sm:py-16 sm:pb-32 lg:hidden">
-        <div className="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4">
+      <footer className="border-t border-slate-200 bg-brand-blue py-10 pb-0 sm:pb-0 lg:hidden">
+        <div className="mx-auto px-4 sm:px-6 md:max-w-2xl md:px-4 pb-16">
           <h2 className="mt-8 flex items-center font-mono text-sm font-medium leading-7 text-white">
             <PersonIcon className="h-3 w-auto fill-slate-300" />
             <span className="ml-2.5">Hosted by</span>
